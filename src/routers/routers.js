@@ -48,7 +48,7 @@ const routers=[
     },{
         name:"login",
         path:"/login",
-        component:()=>import("../view/search/index.vue"),
+        component:()=>import("../view/login/index.vue"),
         meta:{
             showbar:false
         }
