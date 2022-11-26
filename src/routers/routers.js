@@ -2,7 +2,7 @@ const routers=[
     {
         name:"home",
         path:"/home",
-        component:()=>import('../view/home/index.vue'),
+        component:()=>import('@/view/home/index.vue'),
         meta:{
             showbar:true
         }
@@ -13,42 +13,42 @@ const routers=[
     },{
         name:"category",
         path:"/category",
-        component:()=>import("../view/category/index.vue"),
+        component:()=>import("@/view/category/index.vue"),
         meta:{
             showbar:true
         }
     },{
         name:"buying",
         path:"/buying",
-        component:()=>import("../view/buying/index.vue"),
+        component:()=>import("@/view/buying/index.vue"),
         meta:{
             showbar:true
         }
     },{
         name:"personal",
         path:"/personal",
-        component:()=>import("../view/personal/index.vue"),
+        component:()=>import("@/view/personal/index.vue"),
         meta:{
             showbar:true
         }
     },{
         name:"shopcart",
         path:"/shopcart",
-        component:()=>import("../view/shopcart/index.vue"),
+        component:()=>import("@/view/shopcart/index.vue"),
         meta:{
             showbar:true
         }
     },{
         name:"search",
         path:"/search",
-        component:()=>import("../view/search/index.vue"),
+        component:()=>import("@/view/search/index.vue"),
         meta:{
             showbar:false
         }
     },{
         name:"login",
         path:"/login",
-        component:()=>import("../view/login/index.vue"),
+        component:()=>import("@/view/login/index.vue"),
         meta:{
             showbar:false
         }

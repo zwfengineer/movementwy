@@ -2,7 +2,7 @@
 
 <template>
   <RouterView></RouterView>
-  <el-tabs v-model="activeName" class="demo-tabs" tap-position="bottom" @tab-click="handleClick">
+  <el-tabs class="demo-tabs" tap-position="bottom" @tab-click="handleClick">
     <el-tab-pane >
       <template #label>
         <RouterLink to="/home">
@@ -30,7 +30,8 @@
           购物车
         </RouterLink>
       </template>
-    </el-tab-pane>    <el-tab-pane >
+    </el-tab-pane>    
+    <el-tab-pane >
       <template #label>
         <RouterLink to="/personal">
           用户
@@ -43,9 +44,12 @@
 <style scoped>
 
 .el-tabs{
-  position: absolute;
-  bottom: 0rem;
+  position: fixed;
+  bottom: 0px;
+  left:0px;
   height: 2rem;
 }
+.el-tab-pane{
 
+}
 </style>
