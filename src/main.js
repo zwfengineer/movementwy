@@ -8,10 +8,11 @@ import App from './App.vue'
 
 import router from "./routers"
 import pinia from './store'
-
+import Navbar from "@/components/navbar/index.vue"
 
 const app = createApp(App)
 app.use(router)
+.component("Navbar",Navbar)
 .use(pinia)
 .use(element,{local:zhCn})
 .mount('#app')
