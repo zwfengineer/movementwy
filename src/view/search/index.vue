@@ -22,7 +22,7 @@
       </div>
     </div>
     <hr />
-    <div class="keywordbox" v-show="searchstate != 'search'">
+    <div class="keywordbox" v-show="searchstate == 'search'">
       <div v-if="historyKeywords.length > 0" class="keyword">
         <div class="title" @click.sotp>
           <h3>历史记录</h3>
@@ -48,13 +48,15 @@
         </div>
       </div>
     </div>
-    <div>
+    <div class="searchresult" v-show="searchstate == 'result'">
       <div class="filterbox">
-        <div></div>
+        <div class="item">综合</div>
+        <div class="item">价格</div>
+        <div class="item">分类</div>
       </div>
       <div class="tm-goodGrid">
         <ul class="list">
-          <div class="good">
+          <div class="good" v-for="(item, index) in data" :key="index">
             <li class="item" style="z-index: 40; padding: 0 10px 26px 10px">
               <div style="min-height: 1px">
                 <div class="tm-goodInGrid">
@@ -62,7 +64,7 @@
                     <div class="wraper">
                       <img
                         class="tm-lazy-image tm-image-loaded"
-                        :src="imgsrc"
+                        :src="item.listPicUrl"
                       />
                     </div>
                     <div class="promDesc-wrap">
@@ -73,9 +75,9 @@
                       <div class="promDesc">可用红包</div>
                     </div>
                   </div>
-                  <div class="name">A类初享·100%蚕丝双重抗菌春秋被子母被</div>
+                  <div class="name">{{ item.name }}</div>
                   <div class="newItemDesc">
-                    高性价比之选，100%优质天然蚕丝！双重抗菌！整被A类！
+                    {{ item.simpleDesc }}
                   </div>
                   <div></div>
                   <div class="price">
@@ -85,17 +87,17 @@
                         ><span
                           style="color: rgb(250, 30, 50); font-weight: bold"
                           ><span style="font-size: 12px">¥</span
-                          ><span style="font-size: 20px">264</span></span
+                          ><span style="font-size: 20px">{{
+                            item.finalPriceInfoVO.priceInfo.finalPrice
+                              ? item.finalPriceInfoVO.priceInfo.finalPrice.price
+                              : item.retailPrice
+                          }}</span></span
                         ><span class="suffix"></span></span
-                      ><span
-                        style="
-                          color: rgb(153, 153, 153);
-                          font-weight: 300;
-                          text-decoration: line-through;
-                          margin-left: 2px;
-                        "
+                      ><span :style="readpricestyle"
                         ><span style="font-size: 12px">¥</span
-                        ><span style="font-size: 12px">389</span></span
+                        ><span style="font-size: 12px">{{
+                          item.finalPriceInfoVO.priceInfo.counterPrice
+                        }}</span></span
                       ></span
                     >
                   </div>
@@ -115,74 +117,7 @@
                     class="topLogo"
                     src="https://yanxuan.nosdn.127.net/a71f34441c08a19a64fa77ca20e2f342.gif"
                     alt=""
-                    style="width: 29.25; height: 10px"
-                  />
-                </div>
-              </div>
-            </li>
-          </div>
-          <div class="good">
-            <li class="item" style="z-index: 40; padding: 0 5px 26px 10px">
-              <div style="min-height: 1px">
-                <div class="tm-goodInGrid">
-                  <div class="hd">
-                    <div class="wraper">
-                      <img
-                        class="tm-lazy-image tm-image-loaded"
-                        :src="imgsrc"
-                      />
-                    </div>
-                    <div class="promDesc-wrap">
-                      <img
-                        src="//yanxuan.nosdn.127.net/6bd2300f42e946b3960adf1dc7922b77.png"
-                        alt=""
-                      />
-                      <div class="promDesc">可用红包</div>
-                    </div>
-                  </div>
-                  <div class="name">A类初享·100%蚕丝双重抗菌春秋被子母被</div>
-                  <div class="newItemDesc">
-                    高性价比之选，100%优质天然蚕丝！双重抗菌！整被A类！
-                  </div>
-                  <div></div>
-                  <div class="price">
-                    <span
-                      ><span
-                        ><span class="prefix">到手</span
-                        ><span
-                          style="color: rgb(250, 30, 50); font-weight: bold"
-                          ><span style="font-size: 12px">¥</span
-                          ><span style="font-size: 20px">264</span></span
-                        ><span class="suffix"></span></span
-                      ><span
-                        style="
-                          color: rgb(153, 153, 153);
-                          font-weight: 300;
-                          text-decoration: line-through;
-                          margin-left: 2px;
-                        "
-                        ><span style="font-size: 12px">¥</span
-                        ><span style="font-size: 12px">389</span></span
-                      ></span
-                    >
-                  </div>
-                  <div class="banner-wrap">
-                    <div class="banner formal bgRed" style="font-size: 10px">
-                      <img
-                        class="icon"
-                        src="//yanxuan.nosdn.127.net/b268d0d2f46c41d3b3edf5fa33eea3de.png"
-                        alt=""
-                      />
-                      <div class="content">
-                        <div class="right">满99减25元</div>
-                      </div>
-                    </div>
-                  </div>
-                  <img
-                    class="topLogo"
-                    src="https://yanxuan.nosdn.127.net/a71f34441c08a19a64fa77ca20e2f342.gif"
-                    alt=""
-                    style="width: 29.25px; height: 11px"
+                    style="width: 29.25px; height: 10px"
                   />
                 </div>
               </div>
@@ -204,6 +139,9 @@ import response from "./response.json";
 const imgsrc =
   "https://yanxuan-item.nosdn.127.net/d85c9c536f49784aa74a553b6ad643c1.png?type=webp";
 const data = response.data.directlyList;
+data.forEach((item, index) => {
+  console.log(item.finalPriceInfoVO.priceInfo.counterPrice, item.id);
+});
 const route = useRoute();
 const router = useRouter();
 const query = route.query;
@@ -215,14 +153,18 @@ if (query.frompage) {
 }
 if (query.keyword) {
   keyword.value = query.keyword;
-  searchstate.value = "showresult";
-}else{
-  searchstate.value = "search"
+  console.log(query.keyword);
+  searchstate.value = "result";
+} else {
+  searchstate.value = "search";
 }
 const hotkeywords = ref(["hello world"]);
 const historyKeywords = ref(["bad world"]);
 const associate = ref([]);
 const showassociate = ref(false);
+
+const readpricestyle =
+  "color: rgb(153, 153, 153);font-weight: 300;text-decoration: line-through;margin-left: 2px;";
 
 // 搜索框输入
 const inputChangehandle = () => {
@@ -250,20 +192,11 @@ const tagClickhandle = (event) => {
 };
 // 返回上一级路由
 const clickbackhandle = () => {
-  if (frompage.value) {
+  if(frompage.value){
     router.go(frompage.value);
-  } else {
-    router.back();
+  }else{
+    router.back()
   }
-};
-// 搜索
-const searchdata = () => {
-  router.push({
-    name: "search",
-    query: {
-      keyword: keyword.value,
-    },
-  });
 };
 </script>
 <script>
@@ -292,7 +225,7 @@ export default {
   position: relative;
   width: 100%;
   z-index: 1;
-  margin:10px 10px
+  margin: 10px 10px;
 }
 .tagcontainer {
 }
@@ -303,7 +236,6 @@ export default {
   margin-left: 10px;
 }
 li.item {
-  padding: 0 5px 26px 10px;
   float: left;
   position: relative;
   overflow: hidden;
@@ -315,6 +247,7 @@ ul.list {
   position: relative;
   padding: 0;
   display: flex;
+  flex-wrap: wrap;
 }
 li {
   display: list-item;
@@ -352,7 +285,7 @@ li {
   padding: 0 5px;
   max-width: 115.5px;
   position: absolute;
-  bottom: 7px;
+  bottom: -7px;
   left: 7px;
   color: #dd1a21;
   border: 1px solid #fa1e32;
@@ -421,5 +354,21 @@ li {
   padding: 2px 6px;
   margin-left: 0;
   border-radius: 32px;
+}
+.good {
+  width: 50%;
+}
+.topLogo {
+  position: absolute;
+  top: 13.5px;
+  right: 13.5px;
+}
+</style>
+
+<style scoped lang="less">
+.filterbox {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
 }
 </style>
