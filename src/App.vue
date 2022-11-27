@@ -2,7 +2,9 @@
 
 <template>
   <RouterView></RouterView>
-  <Navbar/>
+  <div class="navbarbox">
+    <Navbar></Navbar>
+  </div>
 </template>
 
 <style scoped>

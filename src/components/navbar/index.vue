@@ -1,32 +1,42 @@
 <template>
-  <div v-show="route.meta.showbar">
-    <el-tabs class="demo-tabs" tap-position="bottom" @tab-click="handleClick">
-      <el-tab-pane>
-        <template #label>
-          <RouterLink to="/home"> 主页 </RouterLink>
+  <div :v-show="route.meta.showbar" class="navbar">
+    <van-tabbar v-model="active">
+      <van-tabbar-item>
+        <template #icon>
+          <RouterLink to="/home">
+            <van-icon name="wap-home-o" />
+          </RouterLink>
         </template>
-      </el-tab-pane>
-      <el-tab-pane>
-        <template #label>
-          <RouterLink to="/category"> 分类 </RouterLink>
+      </van-tabbar-item>
+      <van-tabbar-item>
+        <template #icon>
+          <RouterLink to="/categroy">
+            <van-icon name="cluster-o" />
+          </RouterLink>
         </template>
-      </el-tab-pane>
-      <el-tab-pane>
-        <template #label>
-          <RouterLink to="/buying"> 值得买 </RouterLink>
+      </van-tabbar-item>
+      <van-tabbar-item>
+        <template #icon>
+          <RouterLink to="/buying">
+            <van-icon name="smile-comment-o" />
+          </RouterLink>
         </template>
-      </el-tab-pane>
-      <el-tab-pane>
-        <template #label>
-          <RouterLink to="/shopcart"> 购物车 </RouterLink>
+      </van-tabbar-item>
+      <van-tabbar-item>
+        <template #icon>
+          <RouterLink to="/shopcart">
+            <van-icon name="cart-o" />
+          </RouterLink>
         </template>
-      </el-tab-pane>
-      <el-tab-pane>
-        <template #label>
-          <RouterLink to="/personal"> 用户 </RouterLink>
+      </van-tabbar-item>
+      <van-tabbar-item>
+        <template #icon>
+          <RouterLink to="/personal">
+            <van-icon name="user-o" />
+          </RouterLink>
         </template>
-      </el-tab-pane>
-    </el-tabs>
+      </van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
@@ -35,16 +45,14 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 </script>
 <script>
-export default{
-    name:"Navbar"
-}
+export default {
+  name: "Navbar",
+};
 </script>
 
 <style scoped>
-.el-tabs {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  height: 2rem;
+.navbar {
+  height: 100%;
+  width: 100%;
 }
 </style>

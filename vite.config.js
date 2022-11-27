@@ -1,20 +1,33 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 import {resolve} from "path"
-import vue from '@vitejs/plugin-vue'
-
-// https://vitejs.dev/config/
+import postCssPxToRem from "postcss-pxtorem";// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+  ],
+  css:{
+    loaderOptions:{
+      postcss:{
+        plugins:{
+          postCssPxToRem:{
+            rootValue:37.5,
+            propList:["*"]
+          }
+        }
+      }
+    }
+  },
   resolve: {
     alias: {
-      '@': resolve(__dirname, "src"),
+      "@": resolve(__dirname, "src"),
     },
     extensions: [".ts", ".vue", ".js", ".jsx", ".tsx"], // 导入时想要省略的扩展名列表。
   },
-  server:{
-    proxy:{
-      "/api":{
-        target:"http://sph-h5-api.atguigu.cn"
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://sph-h5-api.atguigu.cn",
       },
       "/netEase": {
         target: "https://m.you.163.com",
