@@ -173,10 +173,10 @@ const tagClickhandle = (event) => {
 };
 // 返回上一级路由
 const clickbackhandle = () => {
-  if (frompage.value) {
+  if(frompage.value){
     router.go(frompage.value);
-  } else {
-    router.back();
+  }else{
+    router.back()
   }
 };
 // 搜索
@@ -239,7 +239,7 @@ export default {
   position: relative;
   width: 100%;
   z-index: 1;
-  margin: 10px 10px;
+  margin:  10px 10px;;
 }
 .tagcontainer {
 }
