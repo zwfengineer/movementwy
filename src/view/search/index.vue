@@ -21,7 +21,7 @@
       </div>
     </div>
     <hr />
-    <div class="keywordbox" v-show="searchstate != 'showresult'">
+    <div class="keywordbox" v-show="searchstate != 'search'">
       <div v-if="historyKeywords.length > 0" class="keyword">
         <div class="title" @click.sotp>
           <h3>历史记录</h3>
@@ -216,6 +216,8 @@ if (query.frompage) {
 if (query.keyword) {
   keyword.value = query.keyword;
   searchstate.value = "showresult";
+}else{
+  searchstate.value = "search"
 }
 const hotkeywords = ref(["hello world"]);
 const historyKeywords = ref(["bad world"]);
@@ -277,6 +279,7 @@ export default {
   position: relative;
   width: 100%;
   z-index: 1;
+  margin:10px 10px
 }
 .tagcontainer {
   height: 200px;
@@ -284,7 +287,7 @@ export default {
   margin-top: 40px;
 }
 .el-input {
-  width: 80%;
+  width: 75%;
 }
 .el-button {
   margin-left: 10px;
