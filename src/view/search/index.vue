@@ -9,6 +9,7 @@
         @input="inputChangehandle"
         @blur="blurhandle"
         @focus="focushandle"
+        @keyup.enter="searchdata"
       ></el-input>
       <el-button effect="plain" size="default" @click="clickbackhandle">
         返回
@@ -202,8 +203,7 @@ import response from "./response.json";
 
 const imgsrc =
   "https://yanxuan-item.nosdn.127.net/d85c9c536f49784aa74a553b6ad643c1.png?type=webp";
-const data = response.data;
-
+const data = response.data.directlyList;
 const route = useRoute();
 const router = useRouter();
 const query = route.query;
@@ -245,11 +245,25 @@ const tagClickhandle = (event) => {
   console.log(event);
   if (event.target.className != "tagcontainer") {
     keyword.value = event.target.innerText;
+    searchdata();
   }
 };
 // 返回上一级路由
 const clickbackhandle = () => {
-  router.go(frompage.value);
+  if (frompage.value) {
+    router.go(frompage.value);
+  } else {
+    router.back();
+  }
+};
+// 搜索
+const searchdata = () => {
+  router.push({
+    name: "search",
+    query: {
+      keyword: keyword.value,
+    },
+  });
 };
 </script>
 <script>
@@ -273,7 +287,6 @@ export default {
 .keywordbox {
   position: relative;
   margin-bottom: 10px;
-  margin-top: 40px;
 }
 .searchbox {
   position: relative;
@@ -282,9 +295,6 @@ export default {
   margin:10px 10px
 }
 .tagcontainer {
-  height: 200px;
-  width: 100%;
-  margin-top: 40px;
 }
 .el-input {
   width: 75%;
