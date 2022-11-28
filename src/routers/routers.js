@@ -16,7 +16,7 @@ const routers = [
     path: "/category",
     component: () => import("@/view/category/index.vue"),
     meta: {
-      showbar: false,
+      showbar: true,
     },
   },
   {
