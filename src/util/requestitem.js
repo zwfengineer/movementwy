@@ -4,13 +4,13 @@ import nprogress from "nprogress";
 import "nprogress/nprogress.css";
 
 // 创建axios实例对象
-const request = axios.create({
-    baseURL : '/netEase',
+const requestitem = axios.create({
+    baseURL : '/item',
     timeout : 5000
 })
 
 // 请求拦截器
-request.interceptors.request.use((config)=>{
+requestitem.interceptors.request.use((config)=>{
     // 进度条开始走
     nprogress.start();
     // 返回配置对象
@@ -18,7 +18,7 @@ request.interceptors.request.use((config)=>{
 })
 
 // 响应拦截器
-request.interceptors.response.use(
+requestitem.interceptors.response.use(
     // 响应成功回调
     (response)=>{
         // 进度条结束
@@ -36,4 +36,4 @@ request.interceptors.response.use(
     }
 )
 
-export default request
+export default requestitem
