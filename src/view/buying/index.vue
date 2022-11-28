@@ -22,7 +22,7 @@
                 :key="index"
               >
                 <div class="img">
-                  <img :src="item.picUrl" style="width: 60px; height: 60px" />
+                  <img :src="item.picUrl" />
                 </div>
                 <div class="mainText">{{ item.mainTitle }}</div>
                 <div class="descText">{{ item.viceTitle }}</div>
@@ -187,6 +187,11 @@ console.log(buyStore);
 }
 .pay .swiperTab-container .swiper .my-swipe .swipe_slid a .img {
   margin: 0 auto;
+  width: 60px;
+  height: 60px;
+}
+.pay .swiperTab-container .swiper .my-swipe .swipe_slid a .img img{
+  margin:0 auto;
   width: 60px;
   height: 60px;
 }
