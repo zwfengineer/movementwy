@@ -18,8 +18,11 @@
     "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.26",
-    "swiper": "^5.4.5",
     "postcss-pxtorem": "^6.0.0",
+    "sass": "^1.56.1",
+    "stylus": "^0.59.0",
+    "uuid": "^9.0.0",
+    "vant": "^3.6.6",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"
   },
