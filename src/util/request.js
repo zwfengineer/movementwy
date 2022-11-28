@@ -6,14 +6,13 @@ import "nprogress/nprogress.css";
 // 创建axios实例对象
 const request = axios.create({
     baseURL : '/netEase',
-    timeout : 5000
+    timeout : 50000,
 })
 
 // 请求拦截器
 request.interceptors.request.use((config)=>{
     // 进度条开始走
     nprogress.start();
-    // 返回配置对象
     return config
 })
 
@@ -21,6 +20,7 @@ request.interceptors.request.use((config)=>{
 request.interceptors.response.use(
     // 响应成功回调
     (response)=>{
+        console.log(response)
         // 进度条结束
         nprogress.done();
 
@@ -29,6 +29,7 @@ request.interceptors.response.use(
     },
     // 响应失败回调
     (error)=>{
+        console.log(error)
         // 进度条结束
         nprogress.done();
         // 中断链式调用
