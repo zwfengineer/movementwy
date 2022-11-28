@@ -24,13 +24,22 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "http://sph-h5-api.atguigu.cn",
+        changeOrigin: true,
+      },
+      "/topic/v1": {
+        target: "https://m.you.163.com",
+        changeOrigin: true,
       },
       "/netEase": {
         target: "https://m.you.163.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/netEase/, ""),
       },
-      "/topic/v1": {
+      "/xhr": {
+        target: "https://m.you.163.com",
+        changeOrigin: true,
+      },
+      "/item": {
         target: "https://m.you.163.com",
         changeOrigin: true,
       },
