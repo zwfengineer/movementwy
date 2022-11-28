@@ -63,12 +63,16 @@ export default {
 .el-tabs {
   display: flex;
   justify-content: space-evenly;
+  margin: 0 40px;
+}
+.el-icon{
+  margin: 4.5px;
 }
 .navbar{
   position:fixed;
-  bottom: 0px;
+  bottom: -16px;
   width: 100%;
   z-index: 10;
-  background-color: rgb(221, 216, 216);
+  background-color: #ffffff;
 }
 </style>
