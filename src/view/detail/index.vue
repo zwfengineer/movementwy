@@ -2,16 +2,14 @@
   <div class="detail">
     <div class="header">
       <router-link to="/">
-        <el-icon :size="27">
-          <House />
-        </el-icon>
+        <House />
       </router-link>
       <img src="./images/logo.png" alt="" />
       <router-link to="/search">
-        <el-icon :size="27"><Search /> </el-icon>
+        <Search />
       </router-link>
       <el-button>
-        <el-icon :size="27"><ShoppingCart /> </el-icon>
+        <ShoppingCart />
       </el-button>
     </div>
     <hr />
@@ -148,7 +146,7 @@ let goodName = computed(() => {
   display: none;
 }
 a {
-  background: white;
+  background: transparent;
   border: none;
 }
 li {
@@ -156,7 +154,8 @@ li {
 }
 .el-button {
   border: none;
-  color: black;
+  color: rgb(104, 102, 102);
+  background: transparent;
 }
 .header {
   width: 100%;
@@ -167,7 +166,7 @@ li {
 .header img {
   width: 79px;
   height: 31px;
-  margin: 0 80px;
+  margin: 0 80px 0 110px;
   text-align: center;
 }
 .nav ul {
@@ -200,11 +199,12 @@ li {
   width: 100%;
   height: 100%;
   margin-top: 10px;
+  margin-left: 0px;
   flex-wrap: wrap;
 }
 .good .item {
-  width: 50%;
-  margin: 10px 0;
+  width: 47%;
+  margin: 10px 2px 10px 1px;
 }
 .good .item .show img {
   width: 172px;
@@ -226,5 +226,9 @@ li {
   font-size: 12px;
   text-decoration: line-through;
   color: #ccc;
+}
+svg {
+  width: 30px;
+  height: 30px;
 }
 </style>
