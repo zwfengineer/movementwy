@@ -102,12 +102,12 @@ const goDtetail = (categoryType, superCategoryId, categoryId) => {
             width: 33.3%;
             height: 108px;
             text-align: center;
-            // .cateImg {
-            //   img {
-            //     width: 72px;
-            //     height: 72px;
-            //   }
-            // }
+            .cateImg {
+              img {
+                width: 72px;
+                height: 72px;
+              }
+            }
             .name {
               font-size: 12px;
             }
