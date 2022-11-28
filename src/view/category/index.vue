@@ -151,7 +151,6 @@ const goSearch = () => {
 .left ul {
   width: 100%;
   height: 100%;
-  margin-left: -50px;
   margin-top: -1px;
 }
 .left ul li {
