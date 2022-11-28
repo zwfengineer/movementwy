@@ -69,5 +69,6 @@ export default {
   bottom: 0px;
   width: 100%;
   z-index: 10;
+  background-color: rgb(221, 216, 216);
 }
 </style>
