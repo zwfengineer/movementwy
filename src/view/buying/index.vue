@@ -65,46 +65,6 @@
             </div>
           </section>
         </div>
-
-        <!-- <div class="lookColumn">
-          <section class="innerWrapper" v-for="(item, index) in 3" :key="index">
-            <img class="first_img" src="./images/buying/1.png" alt="" />
-            <div class="first">必买好五必买好五必买好五必买好五必买好五</div>
-            <div class="second">
-              <div class="left_div">
-                <img class="m-userpic" src="./images/buying/4.png" alt="" />
-                <span class="m-userName">毫无打赏</span>
-              </div>
-              <div class="right_div">
-                <img src="./images/buying/5.png" alt="" />
-                <span style="color: #7f7f7f">333</span>
-              </div>
-            </div>
-          </section>
-        </div> -->
-
-        <!-- <div class="lookColumn" v-for="(item,index) in buyStore.buyingpb" :key="index">
-          <section class="innerWrapper">
-            <a href="javascript:;">
-              <img class="first_img" :src="item.look.picUrl" :height="item.look.appBanHeight / 8"/>
-            </a>
-            
-            <div class="first">{{item.topics[0].title}}</div>
-            <div class="second">
-              <div class="left_div">
-                <img
-                  class="m-userpic"
-                  :src="item.look.avatar"
-                />
-                <span class="m-userName">{{item.look.nickname}}</span>
-              </div>
-              <div class="right_div">
-                <img src="./images/pay/5.png" alt="" />
-                <span style="color: #7f7f7f">{{item.topics.readCount}}</span>
-              </div>
-            </div>
-          </section>
-        </div> -->
       </div>
     </div>
   </div>
