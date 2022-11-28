@@ -71,12 +71,11 @@ const goDtetail = (categoryType, superCategoryId, categoryId) => {
   }
   .cateListContainer {
     transition: transform 0.2s ease-out;
-    // 单图
     .banner {
       width: 264px;
       height: 96px;
       margin-bottom: 16px;
-      /deep/ .van-image__img {
+      img {
         height: 100%;
         width: 100%;
         background-color: #eeeeee;
