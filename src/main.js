@@ -8,7 +8,7 @@ import vant from 'vant'
 import 'vant/lib/index.css';
 import "./style.css";
 import App from "./App.vue";
-
+import Navbar from "@/components/navbar/index.vue";
 import './assets/css/reset.css';
 import './assets/css/font/iconfont.css'
 import 'amfe-flexible'

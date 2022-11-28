@@ -1,24 +1,19 @@
 <template>
   <div class="box">
     <router-view></router-view>
-<Tabbar></Tabbar>
-
+    <Navbar></Navbar>
   </div>
-
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style scoped>
-
 .el-tabs {
   position: fixed;
   bottom: 0rem;
   height: 2rem;
 }
-.box{
+.box {
   bottom: -20px;
   margin: 0;
   padding: 0;
