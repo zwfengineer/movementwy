@@ -1,0 +1,13 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html{
+    height: 667px;
+    width: 365px;
+}
+body{
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

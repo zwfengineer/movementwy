@@ -56,7 +56,7 @@
       </div>
       <div class="tm-goodGrid">
         <ul class="list">
-          <div class="good" v-for="(item, index) in data" :key="index">
+          <div class="good" v-for="(item, index) in directlyList" :key="index">
             <li class="item" style="z-index: 40; padding: 0 10px 26px 10px">
               <div style="min-height: 1px">
                 <div class="tm-goodInGrid">
@@ -130,42 +130,23 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Search } from "@element-plus/icons-vue";
 import { useRoute, useRouter } from "vue-router";
+import { useSearchStore } from "@/store/search.js";
+import { mapState } from "pinia";
 import throttle from "lodash/throttle";
 import response from "./response.json";
+import request from "@/util/request.js";
 
-const imgsrc =
-  "https://yanxuan-item.nosdn.127.net/d85c9c536f49784aa74a553b6ad643c1.png?type=webp";
-const data = response.data.directlyList;
-data.forEach((item, index) => {
-  console.log(item.finalPriceInfoVO.priceInfo.counterPrice, item.id);
-});
+const searchstore = useSearchStore();
 const route = useRoute();
 const router = useRouter();
 const query = route.query;
 const keyword = ref("");
 const frompage = ref("");
 const searchstate = ref("");
-if (query.frompage) {
-  frompage.value = query.frompage;
-}
-if (query.keyword) {
-  keyword.value = query.keyword;
-  console.log(query.keyword);
-  searchstate.value = "result";
-} else {
-  searchstate.value = "search";
-}
-const hotkeywords = ref(["hello world"]);
-const historyKeywords = ref(["bad world"]);
-const associate = ref([]);
-const showassociate = ref(false);
-
-const readpricestyle =
-  "color: rgb(153, 153, 153);font-weight: 300;text-decoration: line-through;margin-left: 2px;";
-
+const directlyList = computed(()=>searchstore.directlyList)
 // 搜索框输入
 const inputChangehandle = () => {
   associate.value.push("我似乎遗忘了什么");
@@ -192,12 +173,45 @@ const tagClickhandle = (event) => {
 };
 // 返回上一级路由
 const clickbackhandle = () => {
-  if(frompage.value){
+  if (frompage.value) {
     router.go(frompage.value);
-  }else{
-    router.back()
+  } else {
+    router.back();
   }
 };
+// 搜索
+const searchdata = () => {
+  router.push({
+    name: "search",
+    query: {
+      keyword: keyword.value,
+    },
+  });
+};
+// 获取搜索数据
+const getsearchresult = async (keyword) => {
+  await searchstore.search(keyword);
+  console.log(directlyList.value)
+  searchstate.value = "result";
+};
+
+if (query.frompage) {
+  frompage.value = query.frompage;
+}
+
+if (query.keyword) {
+  keyword.value = query.keyword;
+  getsearchresult(query.keyword);
+} else {
+  searchstate.value = "search";
+}
+const hotkeywords = ref(["hello world"]);
+const historyKeywords = ref(["bad world"]);
+const associate = ref([]);
+const showassociate = ref(false);
+
+const readpricestyle =
+  "color: rgb(153, 153, 153);font-weight: 300;text-decoration: line-through;margin-left: 2px;";
 </script>
 <script>
 export default {

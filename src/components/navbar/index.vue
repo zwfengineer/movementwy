@@ -66,8 +66,8 @@ export default {
 }
 .navbar{
   position:fixed;
-  bottom: 25px;
-  height: 10px;
+  bottom: 0px;
   width: 100%;
+  z-index: 10;
 }
 </style>
