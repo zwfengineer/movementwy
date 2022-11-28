@@ -1,34 +1,48 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import postCssPxToRem from "postcss-pxtorem";
-
-// https://vitejs.dev/config/
+import { resolve } from "path";
+import postCssPxToRem from "postcss-pxtorem"; // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  css: {
+    postcss: {
+      plugins: [
+        postCssPxToRem({
+          rootValue: 37.5,
+          propList: ["*"],
+        }),
+      ],
+    },
+  },
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "src"),
+    },
+    extensions: [".ts", ".vue", ".js", ".jsx", ".tsx"], // 导入时想要省略的扩展名列表。
+  },
   server: {
     proxy: {
       "/api": {
         target: "http://sph-h5-api.atguigu.cn",
+        changeOrigin: true,
+      },
+      "/topic/v1": {
+        target: "https://m.you.163.com",
+        changeOrigin: true,
       },
       "/netEase": {
         target: "https://m.you.163.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/netEase/, ""),
       },
-      "/topic/v1": {
+      "/xhr": {
         target: "https://m.you.163.com",
         changeOrigin: true,
       },
-    },
-  },
-  css: {
-    postcss: {
-      plugins: [
-        postCssPxToRem({
-          rootValue: 37.5, // 1rem的大小
-          propList: ["*"], // 需要转换的属性，这里选择全部都进行转换
-        }),
-      ],
+      "/item": {
+        target: "https://m.you.163.com",
+        changeOrigin: true,
+      },
     },
   },
 });
