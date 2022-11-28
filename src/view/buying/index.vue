@@ -3,44 +3,29 @@
     <Header></Header>
     <div class="swiperTab-container">
       <div class="swiperTab-title">
-        <img src="./images/pay/1.png" class="z-img" />
+        <img src="./images/buying/1.png" class="z-img" />
         <div class="y-text">严选好物 用心生活</div>
-        <img src="./images/pay/2.png" class="b-img" />
+        <img src="./images/buying/2.png" class="b-img" />
       </div>
       <div class="swiper">
-        <!-- <van-swipe class="my-swipe" indicator-color="red">
-          <van-swipe-item v-for="(item, index) in 2" :key="index">
-            <div class="swipe_slid">
-              <a href="javascript:;" >
-                <div class="img">
-                  <img
-                  :src="item.columnUrl"
-                    style="width: 60px; height: 60px"
-                  />
-                </div>
-                <div class="mainText"></div>
-                <div class="descText"></div>
-              </a>
-            </div>
-          </van-swipe-item>
-        </van-swipe> -->
-
         <el-carousel
           class="my-swipe"
-          indicator-position="outside"
           arrow="never"
-          autoplay="false"
-          trigger="click"
-          loop="false"
+          trigger="hover"
+          color="#1e1e1e"
         >
-          <el-carousel-item v-for="item in 4" :key="item" class="swipe_slid">
+          <el-carousel-item v-for="(item, index) in 1" :key="index">
             <div class="swipe_slid">
-              <a href="javascript:;">
+              <a
+                href="javascript:;"
+                v-for="(item, index) in buyStore.buyinglb"
+                :key="index"
+              >
                 <div class="img">
-                  <img :src="item.columnUrl" style="width:60px; height:60px" />
+                  <img :src="item.picUrl" style="width: 60px; height: 60px" />
                 </div>
-                <div class="mainText"></div>
-                <div class="descText"></div>
+                <div class="mainText">{{ item.mainTitle }}</div>
+                <div class="descText">{{ item.viceTitle }}</div>
               </a>
             </div>
           </el-carousel-item>
@@ -49,38 +34,77 @@
     </div>
     <div class="wrappers">
       <div class="lookList">
-        <div class="lookColumn">
-          <section class="innerWrapper" v-for="(item, index) in 3" :key="index">
-            <img class="first_img" src="./images/pay/1.png" alt="" />
-            <div class="first">买好五必买好五必买好五</div>
-            <div class="second">
-              <div class="left_div">
-                <img class="m-userpic" src="./images/pay/4.png" alt="" />
-                <span class="m-userName">毫无打赏</span>
-              </div>
-              <div class="right_div">
-                <img src="./images/pay/5.png" alt="" />
-                <span style="color: #7f7f7f">333</span>
-              </div>
+        <div class="lookColumn" v-for="(item, index) in 2" :key="index">
+          <section class="innerWrapper">
+            <div
+              class="pb"
+              href="javascript:;"
+              v-for="(item, key, index) in buyStore.buyingpb.result"
+              :key="index"
+            >
+              <a
+                href="javascript:;"
+                v-for="(itema, index) in item.topics"
+                :key="index"
+              >
+                <img class="first_img" :src="itema.picUrl" />
+                <div class="first">{{ itema.title }}</div>
+                <div class="second">
+                  <div class="left_div">
+                    <img class="m-userpic" src="./images/buying/4.png" alt="" />
+                    <span class="m-userName">{{ itema.nickname }}</span>
+                  </div>
+                  <div class="right_div">
+                    <img src="./images/buying/5.png" alt="" />
+                    <span style="color: #7f7f7f">{{
+                      itema.readCount
+                    }}</span>
+                  </div>
+                </div>
+              </a>
             </div>
           </section>
         </div>
-        <div class="lookColumn">
+
+        <!-- <div class="lookColumn">
           <section class="innerWrapper" v-for="(item, index) in 3" :key="index">
-            <img class="first_img" src="./images/pay/1.png" alt="" />
+            <img class="first_img" src="./images/buying/1.png" alt="" />
             <div class="first">必买好五必买好五必买好五必买好五必买好五</div>
             <div class="second">
               <div class="left_div">
-                <img class="m-userpic" src="./images/pay/4.png" alt="" />
+                <img class="m-userpic" src="./images/buying/4.png" alt="" />
                 <span class="m-userName">毫无打赏</span>
               </div>
               <div class="right_div">
-                <img src="./images/pay/5.png" alt="" />
+                <img src="./images/buying/5.png" alt="" />
                 <span style="color: #7f7f7f">333</span>
               </div>
             </div>
           </section>
-        </div>
+        </div> -->
+
+        <!-- <div class="lookColumn" v-for="(item,index) in buyStore.buyingpb" :key="index">
+          <section class="innerWrapper">
+            <a href="javascript:;">
+              <img class="first_img" :src="item.look.picUrl" :height="item.look.appBanHeight / 8"/>
+            </a>
+            
+            <div class="first">{{item.topics[0].title}}</div>
+            <div class="second">
+              <div class="left_div">
+                <img
+                  class="m-userpic"
+                  :src="item.look.avatar"
+                />
+                <span class="m-userName">{{item.look.nickname}}</span>
+              </div>
+              <div class="right_div">
+                <img src="./images/pay/5.png" alt="" />
+                <span style="color: #7f7f7f">{{item.topics.readCount}}</span>
+              </div>
+            </div>
+          </section>
+        </div> -->
       </div>
     </div>
   </div>
@@ -88,80 +112,78 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-// import {usepayStore} from '../../stores/pay'
-// let payStore=usepayStore();
-let page = ref("2");
-let size = ref("2");
-// let params=ref({
-//     page:2,
-//     size:2
-// })
+import { usebuyStore } from "../../store/buying";
+
+import { reqBuy2 } from "../../api/buying/buying";
+console.log(123, reqBuy2());
+
+let buyStore = usebuyStore();
 onMounted(() => {
-  // payStore.getListpay()
-  // payStore.getList1pay()
+  buyStore.getListbuy();
+  buyStore.getList1buy();
 });
+console.log(buyStore);
 </script>
 
 <style scoped>
 .pay .row {
-  width: 23.4rem;
-  height: 3.1rem;
+  width: 375px;
+  height: 50px;
 }
 .pay .swiperTab-container {
   position: relative;
-  padding-top: 6.25rem;
+  padding-top: 100px;
   background: #eee;
 }
 .pay .swiperTab-container .swiperTab-title {
   position: absolute;
-  top: 3.1rem;
+  top: 50px;
   z-index: 1;
 }
 .pay .swiperTab-container .swiperTab-title .z-img {
   position: absolute;
-  width: 4rem;
+  width: 65px;
   height: auto;
-  top: 1.8rem;
-  left: 0.3rem;
+  top: 30px;
+  left: 6px;
   z-index: 2;
 }
 .pay .swiperTab-container .swiperTab-title .y-text {
-  font-size: 0.8rem;
-  line-height: 1.3rem;
-  height: 1.3rem;
+  font-size: 14px;
+  line-height: 22px;
+  height: 22px;
   position: absolute;
-  font-family: PingFangSC-Regular;
-  left: 4.5rem;
-  top: 2.5rem;
+  left: 73px;
+  top: 40px;
   color: #fff;
 }
 .pay .swiperTab-container .swiperTab-title .b-img {
-  width: 23.4rem;
-  height: 16.2rem;
+  width: 375px;
+  height: auto;
 }
 .pay .swiperTab-container .swiper .my-swipe {
   position: relative;
   z-index: 3;
-  width: 22.1rem;
-  height: 21rem;
+  width: 355px;
+  height: 270px;
   background: #fff;
-  border-radius: 0.5rem;
-  margin: 1.1rem auto 0;
+  border-radius: 8px;
+  margin: 18px auto 0;
 }
+
 .pay .swiperTab-container .swiper .my-swipe .swipe_slid {
   display: flex;
   justify-content: space-between;
-  width: 23.4rem;
-  height: 21rem;
   flex-wrap: wrap;
   align-content: flex-start;
 }
+
 .pay .swiperTab-container .swiper .my-swipe .swipe_slid a {
   flex: 25%;
   display: inline-block;
-  width: 5.25rem;
-  height: 6.2rem;
-  margin: 1.25rem 0 0 0;
+  width: 84px;
+  height: 100.5px;
+  margin: 20px 0 0 0;
 }
 .pay .swiperTab-container .swiper .my-swipe .swipe_slid a .img {
   margin: 0 auto;
@@ -169,21 +191,21 @@ onMounted(() => {
   height: 60px;
 }
 .pay .swiperTab-container .swiper .my-swipe .swipe_slid a .mainText {
-  width: 5.25rem;
-  height: 1.25rem;
+  width: 84px;
+  height: 20px;
   font-weight: bold;
-  font-size: 0.8rem;
+  font-size: 14px;
   text-align: center;
-  margin: 0.18rem 0;
-  line-height: 1.25rem;
+  margin: 3px 0;
+  line-height: 20px;
   color: #000;
 }
 .pay .swiperTab-container .swiper .my-swipe .swipe_slid a .descText {
-  width: 5.25rem;
-  height: 0.9rem;
-  line-height: 0.9rem;
+  width: 84px;
+  height: 15px;
+  line-height: 15px;
   text-align: center;
-  font-sizinnerwrappere: 0.62rem;
+  font-size: 10px;
   color: #999999;
 }
 .pay .comments {
@@ -193,34 +215,38 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   background-color: #eeeeee;
-  margin: 0.9rem 0.62rem 3.1rem;
+  margin: 15px 10px 50px;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
 }
 .pay .wrappers .lookList .innerWrapper {
   background-color: #fff;
-  margin-bottom: 0.62rem;
-  border-radius: 0.5rem;
+  margin-bottom: 10px;
+  border-radius: 8px;
   overflow: hidden;
   box-sizing: border-box;
-  width: 10.8rem;
+  width: 172.5px;
+}
+.pb {
+  float: left;
 }
 .pay .wrappers .lookList .innerWrapper .first_img {
-  border-radius: 0.5rem;
+  border-radius: 8px;
+  width: 172.5px;
 }
 .pay .wrappers .lookList .innerWrapper .first {
-  width: 10.7rem;
-  font-size: 0.8rem;
+  width: 171.5px;
+  font-size: 14px;
   box-sizing: border-box;
-  padding-left: 0.75rem;
+  padding-left: 12px;
 }
 .pay .wrappers .lookList .innerWrapper .second {
   display: flex;
-  font-size: 0.8rem;
+  font-size: 14px;
   justify-content: space-between;
   align-items: center;
-  padding: 0.62rem 0.62rem;
+  padding: 10px 10px;
   box-sizing: border-box;
   width: 100%;
 }
@@ -229,31 +255,34 @@ onMounted(() => {
   align-items: center;
 }
 .pay .wrappers .lookList .innerWrapper .second .left_div .m-userpic {
-  border: 0.06rem solid #d9d9d9;
+  border: 1px solid #d9d9d9;
   box-sizing: border-box;
   border-radius: 50%;
-  width: 1.3rem;
-  height: 1.3rem;
+  width: 22px;
+  height: 22px;
 }
 .pay .wrappers .lookList .innerWrapper .second .left_div .m-userName {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.75rem;
+  font-size: 12px;
   color: #7f7f7f;
-  height: 1.5rem;
-  line-height: 1.5rem;
-  margin-left: 0.25rem;
+  height: 24px;
+  line-height: 24px;
+  margin-left: 4px;
 }
 .pay .wrappers .lookList .innerWrapper .second .right_div {
-  width: 2.1rem;
-  height: 1.5rem;
+  width: 35px;
+  height: 24px;
   display: flex;
   align-items: center;
-  font-size: 0.62rem;
+  font-size: 10px;
 }
 .pay .wrappers .lookList .innerWrapper .second .right_div img {
-  width: 1rem;
-  height: 1rem;
+  width: 16px;
+  height: 16px;
+}
+::v-deep .el-carousel__container {
+  height: 100%;
 }
 </style>
