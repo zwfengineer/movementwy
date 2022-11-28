@@ -230,6 +230,8 @@ export default defineComponent({
 
 <style lang="less">
 .login-container {
+    background: url(./../../assets/picture.jpg) no-repeat center;
+    background-size: 100% 100%;
   height: 100%;
   width: 100%;
   overflow: hidden;
