@@ -80,7 +80,7 @@
         </div>
       </div> -->
     </el-form>
-<!-- 
+    <!-- 
     <el-dialog :title="'login.thirdparty'" v-model="showDialog">
       {{ "login.thirdpartyTips" }}
       <br />
@@ -130,9 +130,9 @@ export default defineComponent({
     });
 
     const login = {
-      title:"欢迎登录网易优选",
-      login:"登录"
-    }
+      title: "欢迎登录网易优选",
+      login: "登录",
+    };
     const methods = reactive({
       //   validateUsername: (rule: any, value: string, callback: Function) => {
       //     if (!isValidUsername(value)) {
@@ -304,7 +304,11 @@ body {
   height: 100%;
   width: 100%;
 }
-#app{
+#app {
+  height: 100%;
+  width: 100%;
+}
+.box {
   height: 100%;
   width: 100%;
 }

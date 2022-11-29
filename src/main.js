@@ -10,7 +10,7 @@ import "./style.css";
 import "element-plus/dist/index.css";
 import "./assets/css/reset.css";
 import "./assets/css/font/iconfont.css";
-import "amfe-flexible";
+// import "amfe-flexible";
 
 import router from "./routers";
 import pinia from "./store";
