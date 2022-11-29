@@ -4,16 +4,16 @@ import { resolve } from "path";
 import postCssPxToRem from "postcss-pxtorem"; // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  css: {
-    postcss: {
-      plugins: [
-        postCssPxToRem({
-          rootValue: 37.5,
-          propList: ["*"],
-        }),
-      ],
-    },
-  },
+  // css: {
+  //   postcss: {
+  //     plugins: [
+  //       postCssPxToRem({
+  //         rootValue: 37.5,
+  //         propList: ["*"],
+  //       }),
+  //     ],
+  //   },
+  // },
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),

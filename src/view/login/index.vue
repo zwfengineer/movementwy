@@ -1,190 +1,315 @@
 <template>
- 
+  <div class="login-container">
+    <el-form
+      ref="loginFormRef"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      autocomplete="on"
+      label-position="left"
+    >
+      <div class="title-container">
+        <h3 class="title">
+          {{ login.title }}
+        </h3>
+      </div>
+
+      <el-form-item prop="username">
+        <span class="svg-container">
+          <i class="el-icon-user" />
+        </span>
+        <el-input
+          ref="userNameRef"
+          v-model="loginForm.username"
+          :placeholder="'login.username'"
+          name="username"
+          type="text"
+          tabindex="1"
+          autocomplete="on"
+        />
+      </el-form-item>
+
+      <el-tooltip
+        v-model="capsTooltip"
+        content="Caps lock is On"
+        placement="right"
+        manual
+      >
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <i class="el-icon-lock" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="passwordRef"
+            v-model="loginForm.password"
+            :type="passwordType"
+            :placeholder="'login.password'"
+            name="password"
+            tabindex="2"
+            autocomplete="on"
+            @keyup="checkCapslock"
+            @blur="capsTooltip = false"
+            @keyup.enter="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon
+              :name="passwordType === 'password' ? 'eye-off' : 'eye-on'"
+            />
+          </span>
+        </el-form-item>
+      </el-tooltip>
+
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        @click.prevent="handleLogin"
+      >
+        {{ login.login }}
+      </el-button>
+
+      <!-- <div style="position: relative">
+        <div class="tips">
+          <span>{{ "login.username" }} : admin </span>
+          <span>{{ "login.password" }} : {{ "login.any" }} </span>
+        </div>
+        <div class="tips">
+          <span>{{ "login.username" }} : editor </span>
+          <span>{{ "login.password" }} : {{ "login.any" }} </span>
+        </div>
+      </div> -->
+    </el-form>
+    <!-- 
+    <el-dialog :title="'login.thirdparty'" v-model="showDialog">
+      {{ "login.thirdpartyTips" }}
+      <br />
+      <br />
+      <br />
+    </el-dialog> -->
+  </div>
 </template>
 
-<script setup>
-import { reactive, ref } from 'vue';
-import { reqLogin } from '../../personal-api-';
-const user = reactive({
-  phone: "",
-  password: "",
-});
+<script lang="ts">
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  watch,
+  ref,
+  nextTick,
+  toRefs,
+} from "vue";
+// import { isValidUsername } from '@/utils/validate'
+// import { useRoute, LocationQuery, useRouter } from 'vue-router'
+// import { useStore } from '@/store'
+// import { UserActionTypes } from '@/store/modules/user/action-types'
+export default defineComponent({
+  components: {},
+  setup() {
+    const userNameRef = ref(null);
+    const passwordRef = ref(null);
+    const loginFormRef = ref(null);
+    // const router = useRouter()
+    // const route = useRoute()
+    const state = reactive({
+      loginForm: {
+        username: "admin",
+        password: "111111",
+      },
+      loginRules: {
+        username: [{ validator: userNameRef, trigger: "blur" }],
+        password: [{ validator: passwordRef, trigger: "blur" }],
+      },
+      passwordType: "password",
+      loading: false,
+      showDialog: false,
+      capsTooltip: false,
+      redirect: "",
+      otherQuery: {},
+    });
 
-const login = async () => {
-   
-  const { phone, password } = user; 
-  console.log( phone, password)
-  let result = await reqLogin({ phone, password });
-  console.log(result)
-};
+    const login = {
+      title: "欢迎登录网易优选",
+      login: "登录",
+    };
+    const methods = reactive({
+      //   validateUsername: (rule: any, value: string, callback: Function) => {
+      //     if (!isValidUsername(value)) {
+      //       callback(new Error('Please enter the correct user name'))
+      //     } else {
+      //       callback()
+      //     }
+      //   },
+      //   validatePassword: (rule: any, value: string, callback: Function) => {
+      //     if (value.length < 6) {
+      //       callback(new Error('The password can not be less than 6 digits'))
+      //     } else {
+      //       callback()
+      //     }
+      //   },
+      checkCapslock: (e: KeyboardEvent) => {
+        const { key } = e;
+        state.capsTooltip =
+          key !== null && key.length === 1 && key >= "A" && key <= "Z";
+      },
+      showPwd: () => {
+        if (state.passwordType === "password") {
+          state.passwordType = "";
+        } else {
+          state.passwordType = "password";
+        }
+        nextTick(() => {
+          (passwordRef.value as any).focus();
+        });
+      },
+      handleLogin: () => {
+        console.log("handleLogin");
+
+        // (loginFormRef.value as any).validate(async(valid: boolean) => {
+        //   if (valid) {
+        //     state.loading = true
+        //     router
+        //       .push({
+        //         path: state.redirect || '/',
+        //         query: state.otherQuery
+        //       })
+        //       .catch(err => {
+        //         console.warn(err)
+        //       })
+        //     // Just to simulate the time of the request
+        //     setTimeout(() => {
+        //       state.loading = false
+        //     }, 0.5 * 1000)
+        //   } else {
+        //     return false
+        //   }
+        // })
+      },
+    });
+
+    // function getOtherQuery(query: LocationQuery) {
+    //   return Object.keys(query).reduce((acc, cur) => {
+    //     if (cur !== 'redirect') {
+    //       acc[cur] = query[cur]
+    //     }
+    //     return acc
+    //   }, {} as LocationQuery)
+    // }
+
+    // watch(() => route.query, query => {
+    //   if (query) {
+    //     state.redirect = query.redirect?.toString() ?? ''
+    //     state.otherQuery = getOtherQuery(query)
+    //   }
+    // })
+
+    onMounted(() => {
+      if (state.loginForm.username === "") {
+        (userNameRef.value as any).focus();
+      } else if (state.loginForm.password === "") {
+        (passwordRef.value as any).focus();
+      }
+    });
+
+    return {
+      login,
+      userNameRef,
+      passwordRef,
+      loginFormRef,
+      ...toRefs(state),
+      ...toRefs(methods),
+    };
+  },
+});
 </script>
 
-<style lang="scss" scoped>
+<style lang="less">
 .login-container {
-  .login-wrap {
-    height: 487px;
-    background-color: #e93854;
-
-    .login {
-      width: 1200px;
-      height: 487px;
-      margin: 0 auto;
-      background: url(./images/loginbg.png) no-repeat;
-    }
-
-    .loginform {
-      width: 420px;
-      height: 406px;
-      box-sizing: border-box;
-      background: #fff;
-      float: right;
-      top: 45px;
-      position: relative;
-      padding: 20px;
-
-      .tab {
-        li {
-          width: 50%;
-          float: left;
-          text-align: center;
-
-          a {
-            width: 100%;
-            display: block;
-            height: 50px;
-            line-height: 50px;
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-            text-decoration: none;
-          }
-
-          .current {
-            border-bottom: none;
-            border-top-color: #28a3ef;
-            color: #e1251b;
-          }
-        }
-      }
-
-      .content {
-        width: 380px;
-        height: 316px;
-        box-sizing: border-box;
-        border: 1px solid #ddd;
-        border-top: none;
-        padding: 18px;
-
-        form {
-          margin: 15px 0 18px 0;
-          font-size: 12px;
-          line-height: 18px;
-
-          .input-text {
-            margin-bottom: 16px;
-
-            span {
-              float: left;
-              width: 37px;
-              height: 32px;
-              border: 1px solid #ccc;
-              background: url(@/assets/images/icons.png) no-repeat -10px -201px;
-              box-sizing: border-box;
-              border-radius: 2px 0 0 2px;
-            }
-
-            .pwd {
-              background-position: -72px -201px;
-            }
-
-            input {
-              width: 302px;
-              height: 32px;
-              box-sizing: border-box;
-              border: 1px solid #ccc;
-              border-left: none;
-              float: left;
-              padding-top: 6px;
-              padding-bottom: 6px;
-              font-size: 14px;
-              line-height: 22px;
-              padding-right: 8px;
-              padding-left: 8px;
-
-              border-radius: 0 2px 2px 0;
-              outline: none;
-            }
-          }
-
-          .setting {
-            label {
-              float: left;
-            }
-
-            .forget {
-              float: right;
-            }
-          }
-
-          .btn {
-            background-color: #e1251b;
-            padding: 6px;
-            border-radius: 0;
-            font-size: 16px;
-            font-family: 微软雅黑;
-            word-spacing: 4px;
-            border: 1px solid #e1251b;
-            color: #fff;
-            width: 100%;
-            height: 36px;
-            margin-top: 25px;
-            outline: none;
-          }
-        }
-
-        .call {
-          margin-top: 30px;
-
-          ul {
-            float: left;
-
-            li {
-              float: left;
-              margin-right: 5px;
-            }
-          }
-
-          .register {
-            float: right;
-            font-size: 15px;
-            line-height: 38px;
-          }
-
-          .register:hover {
-            color: #4cb9fc;
-            text-decoration: underline;
-          }
-        }
-      }
-    }
-  }
-
-  .copyright {
-    width: 1200px;
+  background: url(./../../assets/picture.jpg) no-repeat center;
+  background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  // background-color: $loginBg;
+  .login-form {
+    position: relative;
+    // width: 520px;
+    max-width: 100%;
+    padding: 160px 35px 0;
     margin: 0 auto;
-    text-align: center;
-    line-height: 24px;
+    overflow: hidden;
+  }
 
-    ul {
-      li {
-        display: inline-block;
-        border-right: 1px solid #e4e4e4;
-        padding: 0 20px;
-        margin: 15px 0;
+  .tips {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+
+    span {
+      &:first-of-type {
+        margin-right: 16px;
       }
     }
   }
+
+  .svg-container {
+    padding: 6px 5px 6px 15px;
+    color: blue;
+    vertical-align: middle;
+    width: 30px;
+    display: inline-block;
+  }
+
+  .title-container {
+    position: relative;
+
+    .title {
+      font-size: 26px;
+      color: #fff;
+      margin: 0px auto 40px auto;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .set-language {
+      color: #fff;
+      position: absolute;
+      top: 3px;
+      font-size: 18px;
+      right: 0px;
+      cursor: pointer;
+    }
+  }
+
+  .show-pwd {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 16px;
+    color: blue;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .thirdparty-button {
+    position: absolute;
+    right: 0;
+    bottom: 6px;
+  }
+}
+</style>
+<style>
+body {
+  height: 100%;
+  width: 100%;
+}
+#app {
+  height: 100%;
+  width: 100%;
+}
+.box {
+  height: 100%;
+  width: 100%;
 }
 </style>
