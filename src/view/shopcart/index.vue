@@ -6,19 +6,26 @@
         <div class="top">
           <div class="left">全场换购</div>
           <div class="right">
-            <span>已满10件,可选择10件商品换购</span>
+            <span>{{ cartGlobalGroupList[0].promTip }}</span>
             <a>去换购</a>
           </div>
         </div>
         <!-- 换购商品 -->
         <div class="bottom">
           <div class="core">
-            <div class="tu" v-for="(item, index) in 5" :key="index">
-              <img src="../../assets/shopCart/images/3.png" alt="" />
+            <div
+              class="tu"
+              v-for="(item, index) in addByPreviewItemList"
+              :key="index"
+            >
+              <img :src="item.pic" alt="" />
               <div class="price">
                 <div class="box1">
-                  <div class="box">换购价</div>
-                  <div class="box">¥19.9</div>
+                  <div class="box">{{ item.priceTag }}</div>
+                  <div class="box">
+                    <span class="actualPrice">¥{{ item.actualPrice }}</span>
+                    <span class="retailPrice">{{ item.retailPrice }}</span>
+                  </div>
                 </div>
                 <img
                   class="box3"
@@ -33,79 +40,87 @@
           </div>
         </div>
       </div>
-      <div class="cartitem" v-for="(item, index) in 4" :key="index">
-        <div class="box7">
-          <div class="box5">
-            <div class="cartitem1"></div>
-          </div>
-          <di class="cartitem2">
-            <img src="../../assets/shopCart/images/3.png" alt="" />
-          </di>
-          <div class="cartitem3">
-            <div class="gundong">
-              <div class="Moota">
-                <span>换购</span>
-                <span>与堵塞异味说拜拜 Moota与堵塞异味说拜拜</span>
-              </div>
-              <div class="guige">50g*4袋</div>
-              <div class="box6">
-                <div>¥19.9</div>
-                <div>x1</div>
-              </div>
-              <!-- <li><div>未达到换购门槛,无法换购</div></li> -->
-            </div>
-          </div>
-          <div class="cartitem4">
-            <div class="delete">删除</div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="free">
       <!-- 免邮-->
-      <div class="item1">
-        <div class="top">
-          <div class="left">
-            <div class="quang"></div>
-            <div class="box8">99包邮</div>
-          </div>
-          <div class="right">
-            <span>已满99包邮</span>
-            <a>去逛逛</a>
-          </div>
-        </div>
-      </div>
-      <div class="cartitem" v-for="(item, index) in 4" :key="index">
-        <div class="box7">
-          <div class="box5">
-            <div class="cartitem1"></div>
-          </div>
-          <di class="cartitem2">
-            <img src="../../assets/shopCart/images/3.png" alt="" />
-          </di>
-          <div class="cartitem3">
-            <div class="gundong">
-              <div class="Moota">
-                <span>换购</span>
-                <span>与堵塞异味说拜拜 Moota与堵塞异味说拜拜</span>
-              </div>
-              <div class="guige">50g*4袋</div>
-              <div class="box6">
-                <div>¥19.9</div>
-              </div>
+      <div v-for="cartitem in cartItemGroupList">
+        <div class="item1">
+          <div class="top">
+            <div class="left">
+              <div class="quang"></div>
+              <div class="box8">{{ cartitem.groupTitle }}</div>
+            </div>
+            <div class="right">
+              <span>已满99包邮</span>
+              <a>去逛逛</a>
             </div>
           </div>
-          <div class="cartitem4">
-            <div class="delete">删除</div>
+        </div>
+        <div
+          class="cartitem"
+          v-for="(promotionitem, index) in cartitem.promotionGroupList[0]
+            .cartItemList"
+          :key="index"
+        >
+          <div class="box7">
+            <div class="box5">
+              <div class="cartitem1"></div>
+            </div>
+            <di class="cartitem2">
+              <img :src="promotionitem.pic" alt="" />
+            </di>
+            <div class="cartitem3">
+              <div class="gundong">
+                <div class="Moota">
+                  <span>换购</span>
+                  <span>{{ promotionitem.itemName }}</span>
+                </div>
+                <select name="" id="">
+                  <option
+                    class="guige"
+                    v-for="(item, index) in promotionitem.specList"
+                    :key="index"
+                  >
+                    {{ item.specName }}{{ item.specValue }}
+                  </option>
+                </select>
+
+                <div class="box6">
+                  <div>¥{{ promotionitem.actualPrice }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="cartitem4">
+              <div class="delete">删除</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="settlement">
+      <el-radio v-model="checked" label="全选"></el-radio>
+      <div class="price">
+        <div class="countprice">
+        {{data.globalInfoVO.showActualPrice}}
+        </div>
+        <div class="prefer">
+        {{data.globalInfoVO.showActivityPrice}}
+        </div>
+      </div>
+      <el-button @click="">结算</el-button>
     </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import data from "./data.json";
+const cartGlobalGroupList = data.cartGlobalGroupList;
+const cartItemGroupList = data.cartItemGroupList;
+const addByPreviewItemList =
+  data.cartGlobalGroupList[0].addBuyPreview.addBuyPreviewItemList;
+
+const checked = ref<boolean>(false);
+</script>
 <style scoped>
 .page {
   margin-bottom: 35px;
@@ -314,7 +329,7 @@
 }
 .free {
   width: 100%;
-
+  margin-bottom: 70px;
   background-color: white;
 }
 .free .item1 {
@@ -484,9 +499,30 @@
 </style>
 
 <style scoped>
-.settlement{
+.settlement {
   height: 60px;
-  position: fixed;
-  bottom: 0px;
+  width: 100%;
+  display: flex;
+  bottom: 24px;
+  justify-content: space-evenly;
+}
+.el-button{
+  float:right;
+}
+.countprice{
+  color: red;
+  font-size: 18px;
+}
+.prefer{
+  color: gray;
+  font-size: 10px;
+}
+.retailPrice {
+  font-size: 10px;
+  color: gray;
+  text-decoration-line: line-through;
+}
+.actualPrice {
+  font-size: 18px;
 }
 </style>
