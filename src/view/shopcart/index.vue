@@ -27,11 +27,6 @@
                     <span class="retailPrice">{{ item.retailPrice }}</span>
                   </div>
                 </div>
-                <img
-                  class="box3"
-                  src="../../assets/shopCart/images/2.png"
-                  alt=""
-                />
               </div>
             </div>
             <div class="gouwu">
